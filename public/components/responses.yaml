@@ -5,9 +5,9 @@ Empty:
     application/json:
       schema:
         "$ref": "#/components/schemas/Empty"
-Admin:
+Name:
   description: |
-    Admin Object.
+     Object.
   content:
     application/json:
       schema:
@@ -16,7 +16,7 @@ Admin:
           email:
             type: string
             example: person_to_invite@bizico.com
-AdminLoginSuccess:
+LoginSuccess:
   description: Token payload.
   content:
     application/json:
@@ -27,16 +27,16 @@ AdminLoginSuccess:
             type: string
         example:
           token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9.uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
-AdminLoginError:
+LoginError:
   description: |
     Failed to login.
     Possible error codes:
-    - A000 - No Admin with such email and password.
+    - A000 - No  with such email and password.
   content:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminJoinError:
+JoinError:
   description: |
     Failed to Join.
     Possible error codes:
@@ -45,16 +45,16 @@ AdminJoinError:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminInviteError:
+InviteError:
   description: |
     Failed to Join.
     Possible error codes:
-    - A001 - Admin with given email, already exist.
+    - A001 -  with given email, already exist.
   content:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminRestoreError:
+RestoreError:
   description: |
     Failed to Join.
     Possible error codes:
@@ -63,26 +63,26 @@ AdminRestoreError:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminChangePasswordError:
+ChangePasswordError:
   description: |
     Failed to Change Password.
     Possible error codes:
-    - A000 - Admin Does Not Exist.
+    - A000 -  Does Not Exist.
     - A011 - Bad Old Password. 
   content:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminRecoverError:
+RecoverError:
   description: |
     Failed to Join.
     Possible error codes:
-    - A000 - No Admin with provided email.
+    - A000 - No  with provided email.
   content:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminUserGetError:
+UserGetError:
   description:  |
     Failed to Get User.
     Possible error codes:
@@ -91,7 +91,7 @@ AdminUserGetError:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminUserBanError:
+UserBanError:
   description:  |
     Failed to Ban User.
     Possible error codes:
@@ -100,7 +100,7 @@ AdminUserBanError:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminUserUnBanError:
+UserUnBanError:
   description:  |
     Failed to Unban User.
     Possible error codes:
@@ -109,20 +109,20 @@ AdminUserUnBanError:
     application/json:
       schema:
         "$ref": "#/components/schemas/ValidationError"
-AdminUsersGetError:
+UsersGetError:
   description:  |
     Failed to Get Users List.
   content:
     application/json:
       schema:  
         "$ref": "#/components/schemas/QueryParseError"  
-AdminUserGetSuccess:
+UserGetSuccess:
   description: User.
   content:
     application/json:
       schema:
           "$ref": "#/components/schemas/User"
-AdminUsersGetSuccess:
+UsersGetSuccess:
   description: List of Users.
   content:
     application/json:
@@ -135,3 +135,15 @@ AdminUsersGetSuccess:
               "$ref": "#/components/schemas/User"
           pagination:
             "$ref": "#/components/schemas/Pagination"
+ServerError:
+  description: Something went terribly wrong.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ServerError"
+AuthorizationError:
+  description: Not authorized.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/AuthorizationError"

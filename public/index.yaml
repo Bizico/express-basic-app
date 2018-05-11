@@ -142,35 +142,25 @@ info:
     `GET https://api.contoso.com/v1.0/people?page=1&pageSize=10`
     ___
 
-    #### Web Sockets
-
-    For now the only way we found in documenting web-sockets events - is to make them `TRACE` requests and starting with `#`.
-
-    Auth:
-
-    After you connect to socket you have limited time *(10 seconds)* to provide auth token into it by: `authenticate`
-    Otherwise you will be disconnected.
-
-    Recomended testing tool is: `http://amritb.github.io/socketio-client-tool/`
 
   contact:
     name: Vadym Zhufiak
-    url: 
+    url: bizico.com
     email: vzhufiak@bizico.com
   version: 0.1.0
 servers:
   - url: http://localhost:3000
   - url: http://127.0.0.1:3000
 tags: 
-  - name: Admin
-    description: Admin Stuff.
+  - name: Name
+    description: Tag name.
 security:
   - bearerAuth: []
 paths:
-  $ref: ./paths/index.yaml    
+  $ref: ./public/paths/index.yaml    
 
 components:
-  $ref: ./components/index.yaml
+  $ref: ./public/components/index.yaml
 
 
   

@@ -35,9 +35,6 @@ info:
     - `E103` - **File Storage Service Error**
 
 
-    #### Entities Error Codes:
-
-
     If you encounter anything else, then someone messed up. 
 
     Most errors containt code (like `A000`) that are described in responses.
@@ -237,532 +234,122 @@ info:
     `GET https://api.contoso.com/v1.0/people?page=1&pageSize=10`
 
     ___
-
-
-    #### Web Sockets
-
-
-    For now the only way we found in documenting web-sockets events - is to make
-    them `TRACE` requests and starting with `#`.
-
-
-    Auth:
-
-
-    After you connect to socket you have limited time *(10 seconds)* to provide
-    auth token into it by: `authenticate`
-
-    Otherwise you will be disconnected.
-
-
-    Recomended testing tool is: `http://amritb.github.io/socketio-client-tool/`
   contact:
     name: Vadym Zhufiak
-    url: null
+    url: bizico.com
     email: vzhufiak@bizico.com
   version: 0.1.0
 servers:
   - url: 'http://localhost:3000'
   - url: 'http://127.0.0.1:3000'
-  - url: 'http://api.bizico.dev.cleveroad.com'
-  - url: 'http://api.bizico.stage.cleveroad.com'
 tags:
-  - name: Admin
-    description: Admin Stuff.
-  - name: User
-    description: Users Things.
-  - name: Location
-    description: Geo Limits.
-  - name: Contact
-    description: Social Stuff.
-  - name: Chat
-    description: Chats.
+  - name: Name
+    description: Tag name.
 security:
   - bearerAuth: []
 paths:
-  /api/admin/login:
+  /api/login:
     post:
-      summary: Get Admin Auth token
-      description: As an Admin I can login with Email address and Password
+      summary: Get Auth token
+      description: I can login with Email address and Password
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminLogin'
+        $ref: '#/components/requestBodies/Login'
       responses:
         '200':
-          $ref: '#/components/responses/AdminLoginSuccess'
+          $ref: '#/components/responses/LoginSuccess'
         '400':
-          $ref: '#/components/responses/AdminLoginError'
+          $ref: '#/components/responses/LoginError'
         '500':
           $ref: '#/components/responses/ServerError'
       security: []
-  /api/admin/join:
+  /api/join:
     post:
-      summary: Join Admin by invite
-      description: As an Admin I can do my first login using invite token
+      summary: Join by invite
+      description: I can do my first login using invite token
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminJoin'
+        $ref: '#/components/requestBodies/Join'
       responses:
         '200':
-          $ref: '#/components/responses/AdminLoginSuccess'
+          $ref: '#/components/responses/LoginSuccess'
         '400':
-          $ref: '#/components/responses/AdminJoinError'
+          $ref: '#/components/responses/JoinError'
         '500':
           $ref: '#/components/responses/ServerError'
       security: []
-  /api/admin/invite:
+  /api/invite:
     post:
-      summary: Send Admin Invite to email
-      description: As an Admin I can invite other Admin
+      summary: Send  Invite to email
+      description: As an  I can invite other
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminInvite'
+        $ref: '#/components/requestBodies/Invite'
       responses:
         '200':
-          $ref: '#/components/responses/Admin'
+          $ref: '#/components/responses/Name'
         '400':
-          $ref: '#/components/responses/AdminInviteError'
+          $ref: '#/components/responses/InviteError'
         '500':
           $ref: '#/components/responses/ServerError'
-  /api/admin/recover:
+  /api/recover:
     post:
       summary: Recover Password Get Recovery Email
       description: Request restore password email
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminRecover'
+        $ref: '#/components/requestBodies/Recover'
       responses:
         '200':
-          $ref: '#/components/responses/AdminLoginSuccess'
+          $ref: '#/components/responses/LoginSuccess'
         '400':
-          $ref: '#/components/responses/AdminRecoverError'
+          $ref: '#/components/responses/RecoverError'
         '500':
           $ref: '#/components/responses/ServerError'
       security: []
-  /api/admin/restore:
+  /api/restore:
     post:
       summary: Restore password by Token
       description: >-
-        As an Admin I can restore password by providing an email address
-        registered in the system
+        As an  I can restore password by providing an email address registered
+        in the system
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminRestore'
+        $ref: '#/components/requestBodies/Restore'
       responses:
         '200':
-          $ref: '#/components/responses/AdminLoginSuccess'
+          $ref: '#/components/responses/LoginSuccess'
         '400':
-          $ref: '#/components/responses/AdminRestoreError'
+          $ref: '#/components/responses/RestoreError'
         '500':
           $ref: '#/components/responses/ServerError'
       security: []
-  /api/admin/password/change:
+  /api/password/change:
     patch:
-      summary: Change Admin Password
-      description: As an Admin I can change password
+      summary: Change  Password
+      description: As an  I can change password
       tags:
-        - Admin
+        - Name
       requestBody:
-        $ref: '#/components/requestBodies/AdminChangePassword'
+        $ref: '#/components/requestBodies/ChangePassword'
       responses:
         '200':
-          $ref: '#/components/responses/AdminLoginSuccess'
+          $ref: '#/components/responses/LoginSuccess'
         '400':
-          $ref: '#/components/responses/AdminChangePasswordError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/admin/users:
-    get:
-      summary: Get Users List
-      description: As an Admin I can get list of all Users
-      tags:
-        - Admin
-      parameters:
-        - name: filter
-          description: Filtration
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: orderBy
-          description: Order By Expression
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: page
-          description: Page
-          in: query
-          required: false
-          schema:
-            type: number
-        - name: pageSize
-          description: Size of Page
-          in: query
-          required: false
-          schema:
-            type: number
-      responses:
-        '200':
-          $ref: '#/components/responses/AdminUsersGetSuccess'
-        '400':
-          $ref: '#/components/responses/AdminUsersGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    delete:
-      summary: Delete User by phone number
-      description: As an Admin I can delete User’s profile
-      tags:
-        - Admin
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteUser'
-      responses:
-        '200':
-          $ref: '#/components/responses/Empty'
-        '400':
-          $ref: '#/components/responses/AdminUserGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '/api/admin/users/{id}':
-    get:
-      summary: Get User by ID
-      description: As an Admin I can view User’s profile
-      tags:
-        - Admin
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/AdminUserGetSuccess'
-        '400':
-          $ref: '#/components/responses/AdminUserGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '/api/admin/users/{id}/ban':
-    patch:
-      summary: Ban User by ID
-      description: As an Admin I can block User
-      tags:
-        - Admin
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/AdminUserGetSuccess'
-        '400':
-          $ref: '#/components/responses/AdminUserBanError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '/api/admin/users/{id}/unban':
-    patch:
-      summary: Unban User by ID
-      description: As an Admin I can unblock User’s
-      tags:
-        - Admin
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/AdminUserGetSuccess'
-        '400':
-          $ref: '#/components/responses/AdminUserUnbanError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/user/signup/start:
-    post:
-      summary: Create User
-      description: As a user I can proceed registration
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserSignupStart'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserSignupStartSuccess'
-        '400':
-          $ref: '#/components/responses/UserSignupStartError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/signup:
-    post:
-      summary: Create User
-      description: As a user I can proceed registration
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserSignupProceed'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserSignupProceedSuccess'
-        '400':
-          $ref: '#/components/responses/UserSignupProceedError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/phone/start:
-    post:
-      summary: Starts Phone Verification
-      description: >-
-        As a user I can Verify my Phone Uses for every Phone Verification
-        Process
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserStartPhoneVerification'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserStartPhoneVerificationSuccess'
-        '400':
-          $ref: '#/components/responses/UserStartPhoneVerificationError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/phone/check:
-    post:
-      summary: Checks Phone Verification
-      description: As a user I can Check Verify Code
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserCheckPhoneVerification'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserCheckPhoneVerificationSuccess'
-        '400':
-          $ref: '#/components/responses/UserCheckPhoneVerificationError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/login:
-    post:
-      summary: Login User using Password
-      description: As a user I can Login with Password.
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserLogin'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserLoginSuccess'
-        '400':
-          $ref: '#/components/responses/UserLoginError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/logout:
-    post:
-      summary: LogOut User using Access Token
-      description: As a user I can Logout with Access Token.
-      tags:
-        - User
-      responses:
-        '200':
-          $ref: '#/components/responses/Empty'
-        '400':
-          $ref: '#/components/responses/AuthorizationError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/user/phone/login:
-    post:
-      summary: Login User using Phone
-      description: >-
-        As a user I can Login with Phone and Verfifcation Code. To get
-        Verification code use `/api/user/start`.
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserLoginPhone'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserLoginPhoneSuccess'
-        '400':
-          $ref: '#/components/responses/UserLoginPhoneError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/user/phone/restore:
-    post:
-      summary: Restor User password using Phone
-      description: >-
-        As a user I can Restore password with Phone and Verfifcation Code. To
-        get Verification code use `/api/user/start`.
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserRestorePasswordPhone'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRestorePhoneSuccess'
-        '400':
-          $ref: '#/components/responses/UserRestorePhoneError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/users/me:
-    get:
-      summary: Get My Account Info
-      description: As a user I can Get My info.
-      tags:
-        - User
-      responses:
-        '200':
-          $ref: '#/components/responses/UserMeSuccess'
-        '400':
-          $ref: '#/components/responses/UserMeError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    patch:
-      summary: Change personal info.
-      description: As a user I can change a personal info.
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserInfo'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserSuccess'
-        '400':
-          $ref: '#/components/responses/UserError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/user/avatar:
-    post:
-      summary: Add personal image.
-      description: As a user I can add a personal image (avatar)
-      tags:
-        - User
-      requestBody:
-        $ref: '#/components/requestBodies/UserAvatar'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserAvatarSuccess'
-        '400':
-          $ref: '#/components/responses/UserAvatarError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/locations:
-    get:
-      summary: Get Locations List
-      description: Get All avaliable Locations for Users
-      tags:
-        - Location
-      parameters:
-        - name: filter
-          description: Filtration
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: orderBy
-          description: Order By Expression
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: page
-          description: Page
-          in: query
-          required: false
-          schema:
-            type: number
-        - name: pageSize
-          description: Size of Page
-          in: query
-          required: false
-          schema:
-            type: number
-      responses:
-        '200':
-          $ref: '#/components/responses/LocationsGetSuccess'
-        '400':
-          $ref: '#/components/responses/LocationsGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/contact:
-    post:
-      summary: Add Contact.
-      description: As a User I can add a another User to Contacts.
-      tags:
-        - Contact
-      requestBody:
-        $ref: '#/components/requestBodies/CreateContact'
-      responses:
-        '200':
-          $ref: '#/components/responses/ContactCreateSuccess'
-        '400':
-          $ref: '#/components/responses/ContactCreateError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '/api/contact/{id}':
-    delete:
-      summary: Remove Contact.
-      description: As a User I can remove a another User from Contacts.
-      tags:
-        - Contact
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/Empty'
-        '400':
-          $ref: '#/components/responses/ContactRemoveError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/contacts:
-    patch:
-      summary: Contact synchronization.
-      description: As a User I can synchronize my Contacts.
-      tags:
-        - Contact
-      requestBody:
-        $ref: '#/components/requestBodies/SynchronizeContact'
-      responses:
-        '200':
-          $ref: '#/components/responses/SynchronizeContactSuccess'
-        '400':
-          $ref: '#/components/responses/ContactCreateError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    get:
-      summary: Get All Contacts.
-      description: As a User I can get my Contacts.
-      tags:
-        - Contact
-      responses:
-        '200':
-          $ref: '#/components/responses/GetContactSuccess'
-        '400':
-          $ref: '#/components/responses/ContactCreateError'
+          $ref: '#/components/responses/ChangePasswordError'
         '500':
           $ref: '#/components/responses/ServerError'
   /api/users:
     get:
       summary: Get Users List
-      description: As an User I can get list of all Users thats are not Banned
+      description: As an  I can get list of all Users
       tags:
-        - User
+        - Name
       parameters:
         - name: filter
           description: Filtration
@@ -795,12 +382,12 @@ paths:
           $ref: '#/components/responses/UsersGetError'
         '500':
           $ref: '#/components/responses/ServerError'
-  '/api/user/{id}':
+  '/api/users/{id}':
     get:
-      summary: Get User by id
-      description: As an User I can get user by id
+      summary: Get User by ID
+      description: As an  I can view User’s profile
       tags:
-        - User
+        - Name
       parameters:
         - name: id
           in: path
@@ -811,182 +398,7 @@ paths:
         '200':
           $ref: '#/components/responses/UserGetSuccess'
         '400':
-          $ref: '#/components/responses/UsersGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/info/policy:
-    get:
-      summary: Get Policy
-      description: Get Some Policy
-      tags:
-        - Info
-      responses:
-        '200':
-          $ref: '#/components/responses/TextGetSuccess'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/info/terms:
-    get:
-      summary: Get Terms
-      description: Get Some Terms
-      tags:
-        - Info
-      responses:
-        '200':
-          $ref: '#/components/responses/TextGetSuccess'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/chats:
-    get:
-      summary: Get Chats
-      description: Get Chats and last ten messages
-      tags:
-        - Chat
-      parameters:
-        - name: filter
-          description: Filtration
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: orderBy
-          description: Order By Expression
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: page
-          description: Page
-          in: query
-          required: false
-          schema:
-            type: number
-        - name: pageSize
-          description: Size of Page
-          in: query
-          required: false
-          schema:
-            type: number
-      responses:
-        '200':
-          $ref: '#/components/responses/ChatGetSuccess'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    post:
-      summary: Create chat
-      description: As User I can create a new chat
-      tags:
-        - Chat
-      requestBody:
-        $ref: '#/components/requestBodies/CreateChat'
-      responses:
-        '200':
-          $ref: '#/components/responses/ChatCreateSuccess'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '/api/chats/{id}/messages':
-    get:
-      summary: Get Chat Messages
-      description: Get Chat Messages List
-      tags:
-        - Chat
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: filter
-          description: Filtration
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: orderBy
-          description: Order By Expression
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: page
-          description: Page
-          in: query
-          required: false
-          schema:
-            type: number
-        - name: pageSize
-          description: Size of Page
-          in: query
-          required: false
-          schema:
-            type: number
-      responses:
-        '200':
-          $ref: '#/components/responses/ChatGetMessagesSuccess'
-        '400':
-          $ref: '#/components/responses/ChatGetMessagesError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  '#connect':
-    trace:
-      summary: Connect to Web Socket
-      description: >-
-        Simple way to connect to Web Socket. You have limited time to provide
-        auth token into socket, or you will be disconnected.
-      tags:
-        - Chat
-      security: []
-  '#authenticate':
-    trace:
-      summary: Authenticate user.
-      description: Lets User to Proceed auth.
-      tags:
-        - Chat
-      requestBody:
-        $ref: '#/components/requestBodies/SocketAuth'
-      security: []
-  '#message':
-    trace:
-      summary: Send message to Chat
-      description: Lets User to send Chat Messages.
-      tags:
-        - Chat
-      requestBody:
-        $ref: '#/components/requestBodies/SocketMessage'
-      security: []
-  '/api/chats/{id}':
-    get:
-      summary: Get Chat by ID
-      description: Get Chat by ID
-      tags:
-        - Chat
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          $ref: '#/components/responses/ChatGetByIDSuccess'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    patch:
-      summary: Update chat info
-      description: As User I can update chat info
-      tags:
-        - Chat
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        $ref: '#/components/requestBodies/UpdateChat'
-      responses:
-        '200':
-          $ref: '#/components/responses/ChatGetByIDSuccess'
+          $ref: '#/components/responses/UserGetError'
         '500':
           $ref: '#/components/responses/ServerError'
 components:
@@ -1017,6 +429,21 @@ components:
             properties:
               message:
                 type: string
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: number
+          example: 1
+        pageSize:
+          type: number
+          example: 10
+        rowCount:
+          type: number
+          example: 1
+        pageCount:
+          type: number
+          example: 1
     ValidationError:
       allOf:
         - $ref: '#/components/schemas/BaseError'
@@ -1046,17 +473,6 @@ components:
         status: 403
     Empty:
       type: object
-    UserAuthToken:
-      type: object
-      properties:
-        token:
-          type: string
-        refresh_token:
-          type: string
-      example:
-        refresh_token: uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
-        token: >-
-          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9
     User:
       type: object
       properties:
@@ -1096,127 +512,7 @@ components:
         username:
           type: string
           example: xxx_casual_user_xxx
-    Location:
-      type: object
-      properties:
-        code:
-          type: string
-          example: UA
-        name:
-          type: string
-          example: Ukraine
-    Contact:
-      type: object
-      properties:
-        touch:
-          type: number
-          example: 1
-        block:
-          type: boolean
-          example: false
-        description:
-          type: string
-          example: Hate this guy.
-        user:
-          $ref: '#/components/schemas/User'
-    Pagination:
-      type: object
-      properties:
-        page:
-          type: number
-          example: 1
-        pageSize:
-          type: number
-          example: 10
-        rowCount:
-          type: number
-          example: 1
-        pageCount:
-          type: number
-          example: 1
-    ChatMessage:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        chat:
-          type: number
-          example: 2
-        user:
-          type: number
-          example: 3
-        text:
-          type: string
-          example: Hello
-        send:
-          type: boolean
-          example: true
-        unread:
-          type: boolean
-          example: true
-        created_at:
-          type: string
-          example: '2018-05-05T09:10:49.094Z'
-    Chat:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        title:
-          type: string
-          example: bizico-dev
-        type:
-          type: string
-          example: public
-        created_at:
-          type: string
-          example: '2018-12-11T22:00:00.000Z'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatMessage'
-    Message:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        chat:
-          type: number
-          example: 12
-        user:
-          type: number
-          example: 21
-        text:
-          type: string
-          example: Hello!
-        unread:
-          type: boolean
-          example: false
-        send:
-          type: boolean
-          example: true
-        created_at:
-          type: string
-          example: '2018-12-11T22:00:00.000Z'
   requestBodies:
-    Login:
-      description: 'A JSON object contaning email, password pair.'
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-              password:
-                type: string
-            example:
-              email: admin@optimizer.com
-              password: lePassword123
     Email:
       description: A JSON object contaning email.
       required: true
@@ -1227,85 +523,8 @@ components:
             properties:
               email:
                 type: string
-                example: missing@optimizer.com
-    Signup:
-      description: Signup data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-              role:
-                type: string
-                enum:
-                  - buyer_admin
-                  - seller_admin
-              password:
-                type: string
-              passwordRepeat:
-                type: string
-              full_name:
-                type: string
-              company_name:
-                type: string
-            example:
-              email: admin@optimizer.com
-              password: lePassword123
-              passwordRepeat: lePassword123
-              role: buyer_admin
-              full_name: Taras Shevchenko
-              company_name: Kurrulo Mefodiivse Bratstvo
-    Confirm:
-      description: Data for email confirmation and signup finalization.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              code:
-                type: string
-              name:
-                type: string
-              contact_person_full_name:
-                type: string
-              contact_person_email:
-                type: string
-              contact_person_phone:
-                type: string
-              legal_address:
-                type: string
-              description:
-                type: string
-              website:
-                type: string
-              country:
-                type: sting
-              city:
-                type: string
-              street:
-                type: string
-              company_email:
-                type: string
-              image:
-                type: string
-            example:
-              code: SOME_HASH
-              name: Tomatoes inc.
-              contact_person_full_name: Vasya Pupkin
-              contact_person_email: opti@mailcom
-              contact_person_phone: '+123123123123'
-              description: ' It''s my company and i love it. Parapapapam'
-              legal_address: Dniprovska naberejna 26a
-              website: 'https://opti.com'
-              country: USA
-              city: New Your
-              street: WallStreet 12
-              company_email: company_name@lol.com
-    AdminRecover:
+                example: missing@sdsa.com
+    Recover:
       description: Data requred for password reset.
       required: true
       content:
@@ -1315,8 +534,8 @@ components:
             properties:
               email:
                 type: string
-                example: admin@bizico.com
-    AdminRestore:
+                example: '@bizico.com'
+    Restore:
       description: Data requred for password reset.
       required: true
       content:
@@ -1333,7 +552,7 @@ components:
               password_repeat:
                 type: string
                 example: brand_new_password
-    AdminChangePassword:
+    ChangePassword:
       description: Data requred for password change.
       required: true
       content:
@@ -1350,8 +569,8 @@ components:
               password_repeat:
                 type: string
                 example: brand_new_password
-    AdminJoin:
-      description: Admin Join Data.
+    Join:
+      description: Join Data.
       required: true
       content:
         application/json:
@@ -1367,8 +586,8 @@ components:
               password_repeat:
                 type: string
                 example: SomeComplexPa$$word
-    AdminLogin:
-      description: Admin Login Data.
+    Login:
+      description: Login Data.
       required: true
       content:
         application/json:
@@ -1377,12 +596,12 @@ components:
             properties:
               email:
                 type: string
-                example: admin@bizico.com
+                example: sdds@bizico.com
               password:
                 type: string
                 example: SomeComplexPa$$word
-    AdminInvite:
-      description: Invite Admin data.
+    Invite:
+      description: Invite  data.
       required: true
       content:
         application/json:
@@ -1391,226 +610,7 @@ components:
             properties:
               email:
                 type: string
-                example: admin@bizico.com
-    UserSignupStart:
-      description: User Signup Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              password:
-                type: string
-                example: SomeComplexPa$$word
-              password_repeat:
-                type: string
-                example: SomeComplexPa$$word
-    UserSignupProceed:
-      description: User Signup Data Proceed.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              code:
-                type: string
-                example: '1337'
-    UserLogin:
-      description: User Login Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              password:
-                type: string
-                example: SomeComplexPa$$word
-    UserLoginPhone:
-      description: User Phone Login Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              code:
-                type: string
-                example: '1337'
-    UserStartPhoneVerification:
-      description: User Get Verification Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-    UserCheckPhoneVerification:
-      description: User Check Verification Code Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              code:
-                type: string
-                example: '1337'
-    UserRestorePasswordPhone:
-      description: User Restore Password Data.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-              code:
-                type: string
-                example: '1337'
-              password:
-                type: string
-                example: SomeComplexPa$$word
-              password_repeat:
-                type: string
-                example: SomeComplexPa$$word
-    UserAvatar:
-      content:
-        multipart/form-data:
-          schema:
-            properties:
-              avatar:
-                type: string
-                format: binary
-    UserInfo:
-      description: User Personal Info.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              first_name:
-                type: string
-                example: Pedro
-              last_name:
-                type: string
-                example: Conci
-              location:
-                type: string
-                example: UA
-    CreateContact:
-      description: Contact Touch Info.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: +1 (975) 515-2036
-              first_name:
-                type: string
-                example: John
-              last_name:
-                type: string
-                example: Gold
-    SynchronizeContact:
-      description: Synchronize Contact.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              users:
-                type: array
-                items:
-                  type: string
-                  example: '+380996666666'
-    DeleteUser:
-      description: Delete user by phone.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: '+380996666666'
-    SocketAuth:
-      description: Socket way to Auth
-      require: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              token:
-                type: string
-                example: Bearer sadsadas32213sdcsd213412reghr31298rhewf9jnsd901324j1
-    SocketMessage:
-      description: Socket way to send Message
-      require: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              chat:
-                type: number
-                example: 44
-              text:
-                type: string
-                example: Hey!
-    CreateChat:
-      description: Update chat by ID.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              participants:
-                type: array
-                items:
-                  type: number
-                  example: 1
-    UpdateChat:
-      description: Update chat by ID.
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              title:
-                type: string
-                example: New title for chat
+                example: asa@bizico.com
   responses:
     Empty:
       description: |
@@ -1619,9 +619,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Empty'
-    Admin:
+    Name:
       description: |
-        Admin Object.
+        Object.
       content:
         application/json:
           schema:
@@ -1630,7 +630,7 @@ components:
               email:
                 type: string
                 example: person_to_invite@bizico.com
-    AdminLoginSuccess:
+    LoginSuccess:
       description: Token payload.
       content:
         application/json:
@@ -1642,16 +642,16 @@ components:
             example:
               token: >-
                 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9.uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
-    AdminLoginError:
+    LoginError:
       description: |
         Failed to login.
         Possible error codes:
-        - A000 - No Admin with such email and password.
+        - A000 - No  with such email and password.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminJoinError:
+    JoinError:
       description: |
         Failed to Join.
         Possible error codes:
@@ -1660,16 +660,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminInviteError:
+    InviteError:
       description: |
         Failed to Join.
         Possible error codes:
-        - A001 - Admin with given email, already exist.
+        - A001 -  with given email, already exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminRestoreError:
+    RestoreError:
       description: |
         Failed to Join.
         Possible error codes:
@@ -1678,26 +678,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminChangePasswordError:
+    ChangePasswordError:
       description: |
         Failed to Change Password.
         Possible error codes:
-        - A000 - Admin Does Not Exist.
+        - A000 -  Does Not Exist.
         - A011 - Bad Old Password. 
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminRecoverError:
+    RecoverError:
       description: |
         Failed to Join.
         Possible error codes:
-        - A000 - No Admin with provided email.
+        - A000 - No  with provided email.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminUserGetError:
+    UserGetError:
       description: |
         Failed to Get User.
         Possible error codes:
@@ -1706,7 +706,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminUserBanError:
+    UserBanError:
       description: |
         Failed to Ban User.
         Possible error codes:
@@ -1715,288 +715,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
-    AdminUserUnBanError:
+    UserUnBanError:
       description: |
         Failed to Unban User.
         Possible error codes:
         - U000 - User Does Not Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    AdminUsersGetError:
-      description: |
-        Failed to Get Users List.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/QueryParseError'
-    AdminUserGetSuccess:
-      description: User.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    AdminUsersGetSuccess:
-      description: List of Users.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-    UserGetSuccess:
-      description: User by id.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    UserSignupStartSuccess:
-      description: Current User.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    UserSignupStartError:
-      description: |
-        Failed to Signup.
-        Possible error codes:
-        - U001 - User with given phone number, already exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserSignupProceedSuccess:
-      description: Current User.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserAuthToken'
-    UserSignupProceedError:
-      description: |
-        Failed to Signup.
-        Possible error codes:
-        - U000 - User with given phone number Does Not Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserLoginSuccess:
-      description: Current User Auth Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserAuthToken'
-    UserLoginError:
-      description: |
-        Failed to Login.
-        Possible error codes:
-        - U000 - User with given phone number and password Does Not Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserLoginPhoneSuccess:
-      description: Current User Auth Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserAuthToken'
-    UserLoginPhoneError:
-      description: |
-        Failed to Login.
-        Possible error codes:
-        - U000 - User with given phone number Does Not Exist.
-        - U011 - Invalid Verification Code.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserRestorePhoneSuccess:
-      description: Current User Auth Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserAuthToken'
-    UserRestorePhoneError:
-      description: |
-        Failed to Restore Password.
-        Possible error codes:
-        - U000 - User with given phone number Does Not Exist.
-        - U011 - Invalid Verification Code.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserStartPhoneVerificationSuccess:
-      description: Current User.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              phone:
-                type: string
-                example: 380996666666
-    UserStartPhoneVerificationError:
-      description: |
-        Failed to Get Phone Verification.
-        Possible error codes:
-        - U000 - User with given phone number Does Not Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserCheckPhoneVerificationSuccess:
-      description: Validation of Verification Token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Empty'
-    UserCheckPhoneVerificationError:
-      description: |
-        Failed to Verify Phone Verification.
-        Possible error codes:
-        - U000 - User with given phone number Does Not Exist.
-        - U011 - Invalid Verification Code.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserMeSuccess:
-      description: Current User Account Info.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    UserMeError:
-      description: |
-        Failed to get User Info.
-        Possible error codes:
-        - U000 - Something wrong with your access token. Get new one.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserSuccess:
-      description: Current User Info.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    UserError:
-      description: |
-        Failed to get Update User Info.
-        Possible error codes:
-        - U000 - Something wrong with your access token. Get new one.
-        - E000 - Validation Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    UserAvatarSuccess:
-      description: Current User Avatar.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              thumbnail:
-                type: string
-                example: >-
-                  https://bizico-backend-dev.s3.eu-west-3.amazonaws.com/users/0/avatars/0/thumbnail
-              small:
-                type: string
-                example: >-
-                  https://bizico-backend-dev.s3.eu-west-3.amazonaws.com/users/0/avatars/0/small
-              medium:
-                type: string
-                example: >-
-                  https://bizico-backend-dev.s3.eu-west-3.amazonaws.com/users/0/avatars/0/medium
-    UserAvatarError:
-      description: |
-        Failed to set Image.
-        Possible error codes:
-        - U000 - Something wrong with your access token. Get new one.
-        - E103 - File Storage Service Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    ServerError:
-      description: Something went terribly wrong.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ServerError'
-    AuthorizationError:
-      description: Not authorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthorizationError'
-    LocationsGetSuccess:
-      description: List of Locations.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-    LocationsGetError:
-      description: |
-        Failed to Get Locations List.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/QueryParseError'
-    GetContactSuccess:
-      description: All my Contacts
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Contact'
-    ContactCreateSuccess:
-      description: New Contact
-      content:
-        application/json:
-          $ref: '#/components/schemas/Contact'
-    SynchronizeContactSuccess:
-      description: Synchronize Contact
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-    ContactCreateError:
-      description: |
-        Failed to Create Contact.
-        Possible error codes:
-        - U000 - User to touch with does not exist.
-        - C001 - Contact Already Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
-    ContactRemoveError:
-      description: |
-        Failed to Remove Contact.
-        Possible error codes:
-        - U000 - User does not exist.
       content:
         application/json:
           schema:
@@ -2008,6 +731,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/QueryParseError'
+    UserGetSuccess:
+      description: User.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
     UsersGetSuccess:
       description: List of Users.
       content:
@@ -2021,76 +750,16 @@ components:
                   $ref: '#/components/schemas/User'
               pagination:
                 $ref: '#/components/schemas/Pagination'
-    TextGetSuccess:
-      description: Text
+    ServerError:
+      description: Something went terribly wrong.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              text:
-                type: string
-                example: long-long text
-    ChatGetSuccess:
-      description: Chat
+            $ref: '#/components/schemas/ServerError'
+    AuthorizationError:
+      description: Not authorized.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              results:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Chat'
-              pagination:
-                $ref: '#/components/schemas/Pagination'
-    ChatGetByIDSuccess:
-      description: Chat
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              id:
-                type: number
-                example: 2
-              title:
-                type: string
-                example: bizico NEWS
-              type:
-                type: string
-                example: public
-              created_at:
-                type: string
-                example: '2018-12-11T22:00:00.000Z'
-    ChatCreateSuccess:
-      description: Chat
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                example: private
-              id:
-                type: number
-                example: 2
-    ChatGetMessagesSuccess:
-      description: List of Chat Messages
-      content:
-        'application:json':
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Message'
-    ChatGetMessagesError:
-      description: |
-        Failed to get List of Messages in Chat.
-        Possible error codes:
-        - CH000 - Chat Does Not Exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/AuthorizationError'
 

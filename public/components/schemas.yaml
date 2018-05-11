@@ -19,6 +19,21 @@ BaseError:
         properties:
           message:
             type: string
+Pagination:
+  type: object
+  properties:
+    page:
+      type: number
+      example: 1
+    pageSize:
+      type: number
+      example: 10
+    rowCount:
+      type: number
+      example: 1
+    pageCount:
+      type: number
+      example: 1
 ValidationError:
   allOf:
   - "$ref": "#/components/schemas/BaseError"
@@ -49,17 +64,6 @@ AuthorizationError:
 Empty:
   type: object
 
-UserAuthToken:
-  type: object
-  properties:
-    token:
-      type: string
-    refresh_token:
-      type: string
-  example: 
-    refresh_token: uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
-    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9
-    
 User:
   type: object
   properties:
