@@ -1,0 +1,707 @@
+"/api/admin/login":
+  post:
+    summary: Get Admin Auth token
+    description:  As an Admin I can login with Email address and Password
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminLogin"
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminLoginSuccess"
+      400:
+        "$ref": "#/components/responses/AdminLoginError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/admin/join":
+  post:
+    summary: Join Admin by invite
+    description: As an Admin I can do my first login using invite token
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminJoin"
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminLoginSuccess"
+      400:
+        "$ref": "#/components/responses/AdminJoinError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/admin/invite":
+  post:
+    summary: Send Admin Invite to email
+    description: As an Admin I can invite other Admin
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminInvite"
+    responses:
+      200:
+        "$ref": "#/components/responses/Admin"
+      400:
+        "$ref": "#/components/responses/AdminInviteError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/admin/recover":
+  post:
+    summary: Recover Password Get Recovery Email
+    description: Request restore password email
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminRecover"
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminLoginSuccess"
+      400:
+        "$ref": "#/components/responses/AdminRecoverError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/admin/restore":
+  post:
+    summary: Restore password by Token
+    description: As an Admin I can restore password by providing an email address registered in the system
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminRestore"
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminLoginSuccess"
+      400:
+        "$ref": "#/components/responses/AdminRestoreError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/admin/password/change":
+  patch:
+    summary: Change Admin Password
+    description: As an Admin I can change password
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/AdminChangePassword"
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminLoginSuccess"
+      400:
+        "$ref": "#/components/responses/AdminChangePasswordError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/admin/users":
+  get:
+    summary: Get Users List
+    description: As an Admin I can get list of all Users
+    tags:
+    - Admin
+    parameters:
+    - name: filter
+      description: Filtration
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      description: Order By Expression
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: page
+      description: Page
+      in: query
+      required: false
+      schema:
+        type: number
+    - name: pageSize
+      description: Size of Page
+      in: query
+      required: false
+      schema:
+        type: number
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminUsersGetSuccess"
+      400:
+        "$ref": "#/components/responses/AdminUsersGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+  delete:
+    summary: Delete User by phone number
+    description: As an Admin I can delete User’s profile
+    tags:
+    - Admin
+    requestBody:
+      "$ref": "#/components/requestBodies/DeleteUser"
+    responses:
+      200:
+        "$ref": "#/components/responses/Empty"
+      400:
+        "$ref": "#/components/responses/AdminUserGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/admin/users/{id}":
+  get:
+    summary: Get User by ID
+    description: As an Admin I can view User’s profile
+    tags:
+    - Admin
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminUserGetSuccess"
+      400:
+        "$ref": "#/components/responses/AdminUserGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/admin/users/{id}/ban":
+  patch:
+    summary: Ban User by ID
+    description: As an Admin I can block User
+    tags:
+    - Admin
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminUserGetSuccess"
+      400:
+        "$ref": "#/components/responses/AdminUserBanError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/admin/users/{id}/unban":
+  patch:
+    summary: Unban User by ID
+    description: As an Admin I can unblock User’s
+    tags:
+    - Admin
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/AdminUserGetSuccess"
+      400:
+        "$ref": "#/components/responses/AdminUserUnbanError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/user/signup/start":
+  post:
+    summary: Create User
+    description:  As a user I can proceed registration
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserSignupStart"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserSignupStartSuccess"
+      400:
+        "$ref": "#/components/responses/UserSignupStartError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/user/signup":
+  post:
+    summary: Create User
+    description:  As a user I can proceed registration
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserSignupProceed"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserSignupProceedSuccess"
+      400:
+        "$ref": "#/components/responses/UserSignupProceedError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/user/phone/start":
+  post:
+    summary: Starts Phone Verification
+    description:  As a user I can Verify my Phone Uses for every Phone Verification Process
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserStartPhoneVerification"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserStartPhoneVerificationSuccess"
+      400:
+        "$ref": "#/components/responses/UserStartPhoneVerificationError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/user/phone/check":
+  post:
+    summary: Checks Phone Verification
+    description:  As a user I can Check Verify Code
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserCheckPhoneVerification"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserCheckPhoneVerificationSuccess"
+      400:
+        "$ref": "#/components/responses/UserCheckPhoneVerificationError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+"/api/user/login":
+  post:
+    summary: Login User using Password
+    description:  As a user I can Login with Password.
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserLogin"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserLoginSuccess"
+      400:
+        "$ref": "#/components/responses/UserLoginError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+
+"/api/user/logout":
+  post:
+    summary: LogOut User using Access Token
+    description:  As a user I can Logout with Access Token.
+    tags:
+    - User
+    responses:
+      200:
+        "$ref": "#/components/responses/Empty"
+      400:
+        "$ref": "#/components/responses/AuthorizationError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+
+
+"/api/user/phone/login":
+  post:
+    summary: Login User using Phone
+    description:  As a user I can Login with Phone and Verfifcation Code. To get Verification code use `/api/user/start`.
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserLoginPhone"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserLoginPhoneSuccess"
+      400:
+        "$ref": "#/components/responses/UserLoginPhoneError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+
+"/api/user/phone/restore":
+  post:
+    summary: Restor User password using Phone
+    description:  As a user I can Restore password with Phone and Verfifcation Code. To get Verification code use `/api/user/start`.
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserRestorePasswordPhone"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserRestorePhoneSuccess"
+      400:
+        "$ref": "#/components/responses/UserRestorePhoneError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+    security: []
+
+"/api/users/me":
+  get:
+    summary: Get My Account Info
+    description:  As a user I can Get My info.
+    tags:
+    - User
+    responses:
+      200:
+        "$ref": "#/components/responses/UserMeSuccess"
+      400:
+        "$ref": "#/components/responses/UserMeError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+  patch:
+    summary: Change personal info.
+    description: As a user I can change a personal info.
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserInfo"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserSuccess"
+      400:
+        "$ref": "#/components/responses/UserError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/user/avatar":
+  post:
+    summary: Add personal image.
+    description: As a user I can add a personal image (avatar)
+    tags:
+    - User
+    requestBody:
+      "$ref": "#/components/requestBodies/UserAvatar"
+    responses:
+      200:
+        "$ref": "#/components/responses/UserAvatarSuccess"
+      400:
+        "$ref": "#/components/responses/UserAvatarError"
+      500:
+        "$ref": "#/components/responses/ServerError"  
+"/api/locations":
+  get:
+    summary: Get Locations List
+    description: Get All avaliable Locations for Users
+    tags:
+    - Location
+    parameters:
+    - name: filter
+      description: Filtration
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      description: Order By Expression
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: page
+      description: Page
+      in: query
+      required: false
+      schema:
+        type: number
+    - name: pageSize
+      description: Size of Page
+      in: query
+      required: false
+      schema:
+        type: number
+    responses:
+      200:
+        "$ref": "#/components/responses/LocationsGetSuccess"
+      400:
+        "$ref": "#/components/responses/LocationsGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/contact":
+  post:
+    summary: Add Contact.
+    description: As a User I can add a another User to Contacts.
+    tags:
+    - Contact
+    requestBody:
+      "$ref": "#/components/requestBodies/CreateContact"
+    responses:
+      200:
+        "$ref": "#/components/responses/ContactCreateSuccess"
+      400:
+        "$ref": "#/components/responses/ContactCreateError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/contact/{id}":
+  delete:
+    summary: Remove Contact.
+    description: As a User I can remove a another User from Contacts.
+    tags:
+    - Contact
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/Empty"
+      400:
+        "$ref": "#/components/responses/ContactRemoveError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+
+"/api/contacts":
+  patch:
+    summary: Contact synchronization.
+    description: As a User I can synchronize my Contacts.
+    tags:
+    - Contact
+    requestBody:
+      "$ref": "#/components/requestBodies/SynchronizeContact"
+    responses:
+      200:
+        "$ref": "#/components/responses/SynchronizeContactSuccess"
+      400:
+        "$ref": "#/components/responses/ContactCreateError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+  get:
+    summary: Get All Contacts.
+    description: As a User I can get my Contacts.
+    tags:
+    - Contact
+    responses:
+      200:
+        "$ref": "#/components/responses/GetContactSuccess"
+      400:
+        "$ref": "#/components/responses/ContactCreateError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/users":
+  get:
+    summary: Get Users List
+    description: As an User I can get list of all Users thats are not Banned
+    tags:
+    - User
+    parameters:
+    - name: filter
+      description: Filtration
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      description: Order By Expression
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: page
+      description: Page
+      in: query
+      required: false
+      schema:
+        type: number
+    - name: pageSize
+      description: Size of Page
+      in: query
+      required: false
+      schema:
+        type: number
+    responses:
+      200:
+        "$ref": "#/components/responses/UsersGetSuccess"
+      400:
+        "$ref": "#/components/responses/UsersGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/user/{id}":
+  get:
+    summary: Get User by id
+    description: As an User I can get user by id
+    tags:
+    - User
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/UserGetSuccess"
+      400:
+        "$ref": "#/components/responses/UsersGetError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+
+"/api/info/policy":
+  get:
+    summary: Get Policy
+    description: Get Some Policy
+    tags:
+    - Info
+    responses:
+      200:
+        "$ref": "#/components/responses/TextGetSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/info/terms":
+  get:
+    summary: Get Terms
+    description: Get Some Terms
+    tags:
+    - Info
+    responses:
+      200:
+        "$ref": "#/components/responses/TextGetSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/chats":
+  get:
+    summary: Get Chats
+    description: Get Chats and last ten messages
+    tags:
+    - Chat
+    parameters:
+    - name: filter
+      description: Filtration
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      description: Order By Expression
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: page
+      description: Page
+      in: query
+      required: false
+      schema:
+        type: number
+    - name: pageSize
+      description: Size of Page
+      in: query
+      required: false
+      schema:
+        type: number
+    responses:
+      200:
+        "$ref": "#/components/responses/ChatGetSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+  post:
+    summary: Create chat
+    description: As User I can create a new chat
+    tags:
+    - Chat
+    requestBody:
+      "$ref": "#/components/requestBodies/CreateChat"
+    responses:
+      200:
+        "$ref": "#/components/responses/ChatCreateSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"/api/chats/{id}/messages":
+  get:
+    summary: Get Chat Messages
+    description: Get Chat Messages List
+    tags:
+    - Chat
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    - name: filter
+      description: Filtration
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      description: Order By Expression
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: page
+      description: Page
+      in: query
+      required: false
+      schema:
+        type: number
+    - name: pageSize
+      description: Size of Page
+      in: query
+      required: false
+      schema:
+        type: number
+    responses:
+      200:
+        "$ref": "#/components/responses/ChatGetMessagesSuccess"
+      400:
+        "$ref": "#/components/responses/ChatGetMessagesError"
+      500:
+        "$ref": "#/components/responses/ServerError"
+"#connect":
+  trace:
+    summary: Connect to Web Socket
+    description: Simple way to connect to Web Socket. You have limited time to provide auth token into socket, or you will be disconnected.
+    tags:
+    - Chat
+    security: []
+"#authenticate":
+  trace:
+    summary: Authenticate user.
+    description: Lets User to Proceed auth.
+    tags:
+    - Chat
+    requestBody:
+      "$ref": "#/components/requestBodies/SocketAuth"
+    security: []
+"#message":
+  trace:
+    summary: Send message to Chat
+    description: Lets User to send Chat Messages.
+    tags:
+    - Chat
+    requestBody:
+      "$ref": "#/components/requestBodies/SocketMessage"
+    security: []
+"/api/chats/{id}":
+  get:
+    summary: Get Chat by ID
+    description: Get Chat by ID
+    tags:
+    - Chat
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    responses:
+      200:
+        "$ref": "#/components/responses/ChatGetByIDSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+  patch:
+    summary: Update chat info
+    description: As User I can update chat info
+    tags:
+    - Chat
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    requestBody:
+      "$ref": "#/components/requestBodies/UpdateChat"
+    responses:
+      200:
+        "$ref": "#/components/responses/ChatGetByIDSuccess"
+      500:
+        "$ref": "#/components/responses/ServerError"
+

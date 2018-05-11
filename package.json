@@ -1,0 +1,36 @@
+{
+  "name": "express-basic-app",
+  "version": "0.0.1",
+  "main": "server.js",
+  "description": "This is basic express app implementation for project easy start.",
+  "repository": "https://github.com/Bizico/express-basic-app",
+  "author": "Vadym Zhufiak",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bookshelf": "^0.13.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jsep": "^0.3.4",
+    "knex": "^0.14.6",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.3",
+    "raven": "^2.6.1",
+    "swagger-ui-express": "^3.0.8",
+    "validator": "^10.2.0",
+    "yamljs": "^0.3.0"
+  },
+  "scripts": {
+    "start": "node build/server.js",
+    "start:dev": "nodemon --exec babel-node -- ./src/www.js --inspect ",
+    "build:doc": "multi-file-swagger -o yaml public/swagger.yaml > public/doc.yaml",
+    "build": "webpack --config ./webpack.config.js",
+    "test": "jest --no-cache",
+    "test:watch": "jest --watch",
+    "cli": "babel-node  ./scripts/cli.js"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.7.0"
+  }
+}

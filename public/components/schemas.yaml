@@ -1,0 +1,101 @@
+ServerError:
+  type: object
+  properties:
+    message:
+      type: string
+BaseError:
+  type: object
+  properties:
+    code:
+      type: string
+    message:
+      type: string
+    status:
+      type: number
+    fields:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          message:
+            type: string
+ValidationError:
+  allOf:
+  - "$ref": "#/components/schemas/BaseError"
+  description: Thrown when request parameters are inapropriate.
+  example:
+    code: A000
+    message: Bad request.
+    status: 400
+    fields:
+      password:
+        message: "Must be at least 6 chars"
+QueryParseError:
+  allOf:
+  - "$ref": "#/components/schemas/BaseError"
+  description: Thrown when request filter/orderBy parameters are inapropriate.
+  example:
+    code: A000
+    message: Can't parse to Logical Expression.
+    status: 400
+AuthorizationError:
+  allOf:
+  - "$ref": "#/components/schemas/BaseError"
+  description: "Thrown when user has no access rights."
+  example:
+    code: E001
+    message: Not authorized.
+    status: 403
+Empty:
+  type: object
+
+UserAuthToken:
+  type: object
+  properties:
+    token:
+      type: string
+    refresh_token:
+      type: string
+  example: 
+    refresh_token: uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9
+    
+User:
+  type: object
+  properties:
+    id:
+      type: number
+      example: 1
+    email:
+      type: string
+      example: user@bizico.com
+    first_name:
+      type: string
+      example: Foo
+    last_name:
+      type: string
+      example: Bar
+    avatar:
+      type: object
+      properties:
+        thumbnail:
+          type: string
+          example: ".../thumbnail"
+        small:
+          type: string
+          example: ".../small"
+        medium:
+          type: string
+          example: ".../medium"
+    location:
+      type: string
+      example: Here.
+    ban:
+      type: boolean
+      example: true
+    active:
+      type: boolean
+      example: true
+    username:
+      type: string
+      example: "xxx_casual_user_xxx"

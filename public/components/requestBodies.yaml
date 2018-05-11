@@ -1,0 +1,190 @@
+Login:
+  description: A JSON object contaning email, password pair.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+        example:
+          email: admin@optimizer.com
+          password: lePassword123
+Email:
+  description: A JSON object contaning email.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: missing@optimizer.com
+Signup:
+  description: Signup data.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+          role:
+            type: string
+            enum:
+            - buyer_admin
+            - seller_admin
+          password:
+            type: string
+          passwordRepeat:
+            type: string
+          full_name:
+            type: string
+          company_name:
+            type: string
+        example:
+          email: admin@optimizer.com
+          password: lePassword123
+          passwordRepeat: lePassword123
+          role: buyer_admin
+          full_name: Taras Shevchenko
+          company_name: Kurrulo Mefodiivse Bratstvo
+Confirm:
+  description: Data for email confirmation and signup finalization.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          code:
+            type: string
+          name:
+            type: string
+          contact_person_full_name:
+            type: string
+          contact_person_email:
+            type: string
+          contact_person_phone:
+            type: string
+          legal_address:
+            type: string
+          description:
+            type: string
+          website:
+            type: string
+          country:
+            type: sting
+          city:
+            type: string
+          street:
+            type: string
+          company_email:
+            type: string
+          image:
+            type: string
+        example:
+          code: SOME_HASH
+          name: Tomatoes inc.
+          contact_person_full_name: Vasya Pupkin
+          contact_person_email: opti@mailcom
+          contact_person_phone: "+123123123123"
+          description: " It's my company and i love it. Parapapapam"
+          legal_address: "Dniprovska naberejna 26a"
+          website: "https://opti.com"
+          country: USA
+          city: New Your
+          street: WallStreet 12
+          company_email: "company_name@lol.com"
+AdminRecover:
+  description: Data requred for password reset.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: "admin@bizico.com"
+AdminRestore:
+  description: Data requred for password reset.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          hash:
+            type: string
+            example: "$2a$10$rlCWKHTw24rS6gXFVKr2hOv8KHdYuf/qc0PdJyQOesCy.kKka3QHu"
+          password:
+            type: string
+            example: "brand_new_password"
+          password_repeat:
+            type: string
+            example: "brand_new_password"
+AdminChangePassword:
+  description: Data requred for password change.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          old_password:
+            type: string
+            example: "old_password"
+          password:
+            type: string
+            example: "brand_new_password"
+          password_repeat:
+            type: string
+            example: "brand_new_password"
+AdminJoin:
+  description: Admin Join Data.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          invite:
+            type: string
+            example: $2b$10$faBdPjD4IF6BGCq4YblFH.wxwcqD8ou1bpT.BGbUqE4qkOer7Tn5W
+          password:
+            type: string
+            example: SomeComplexPa$$word
+          password_repeat:
+            type: string
+            example: SomeComplexPa$$word
+AdminLogin:
+  description: Admin Login Data.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: admin@bizico.com
+          password:
+            type: string
+            example: SomeComplexPa$$word
+AdminInvite:
+  description: Invite Admin data.
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: admin@bizico.com

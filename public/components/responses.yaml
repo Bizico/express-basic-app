@@ -1,0 +1,137 @@
+Empty:
+  description: |
+    Empty Object
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/Empty"
+Admin:
+  description: |
+    Admin Object.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: person_to_invite@bizico.com
+AdminLoginSuccess:
+  description: Token payload.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          token:
+            type: string
+        example:
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG9wdGltaXplci5jb20iLCJpYXQiOjE1MTA5MDY1NTd9.uPr_WWLMu26lEWyxr2XBn2uTyUL3zBywR7AhdPPWLhA
+AdminLoginError:
+  description: |
+    Failed to login.
+    Possible error codes:
+    - A000 - No Admin with such email and password.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminJoinError:
+  description: |
+    Failed to Join.
+    Possible error codes:
+    - A000 - Incorrect/Bad Invite Token.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminInviteError:
+  description: |
+    Failed to Join.
+    Possible error codes:
+    - A001 - Admin with given email, already exist.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminRestoreError:
+  description: |
+    Failed to Join.
+    Possible error codes:
+    - A010 - Incorrect/Bad Invite Token.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminChangePasswordError:
+  description: |
+    Failed to Change Password.
+    Possible error codes:
+    - A000 - Admin Does Not Exist.
+    - A011 - Bad Old Password. 
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminRecoverError:
+  description: |
+    Failed to Join.
+    Possible error codes:
+    - A000 - No Admin with provided email.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminUserGetError:
+  description:  |
+    Failed to Get User.
+    Possible error codes:
+    - U000 - User Does Not Exist.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminUserBanError:
+  description:  |
+    Failed to Ban User.
+    Possible error codes:
+    - U000 - User Does Not Exist.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminUserUnBanError:
+  description:  |
+    Failed to Unban User.
+    Possible error codes:
+    - U000 - User Does Not Exist.
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/ValidationError"
+AdminUsersGetError:
+  description:  |
+    Failed to Get Users List.
+  content:
+    application/json:
+      schema:  
+        "$ref": "#/components/schemas/QueryParseError"  
+AdminUserGetSuccess:
+  description: User.
+  content:
+    application/json:
+      schema:
+          "$ref": "#/components/schemas/User"
+AdminUsersGetSuccess:
+  description: List of Users.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          results:
+            type: array
+            items:
+              "$ref": "#/components/schemas/User"
+          pagination:
+            "$ref": "#/components/schemas/Pagination"
