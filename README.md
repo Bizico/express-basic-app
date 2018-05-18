@@ -21,3 +21,8 @@ It have already:
 * Feature based file structure.
 * Ready `.editorconfig`.
 * Ready `webpack.config.js`.
+
+# TODO:
+
+* Errors factory for features.
+* Errors according to Node 10.
