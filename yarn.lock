@@ -515,6 +515,12 @@ body-parser@1.18.2:
     raw-body "2.3.2"
     type-is "~1.6.15"
 
+bookshelf-collection-querystring-mutation@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/bookshelf-collection-querystring-mutation/-/bookshelf-collection-querystring-mutation-0.1.0.tgz#1c678dd77706018a84d0e9788bb8b824598d0382"
+  dependencies:
+    jsep "^0.3.4"
+
 bookshelf@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/bookshelf/-/bookshelf-0.13.3.tgz#aa73d9159b6cac92830dc1ff37325490c3c6dfba"
