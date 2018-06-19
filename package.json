@@ -12,11 +12,13 @@
     "bookshelf-collection-querystring-mutation": "^0.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "jest": "^23.1.0",
     "jsep": "^0.3.4",
     "knex": "^0.14.6",
     "morgan": "^1.9.0",
     "pg": "^7.4.3",
     "raven": "^2.6.1",
+    "supertest": "^3.1.0",
     "swagger-ui-express": "^3.0.8",
     "validator": "^10.2.0",
     "yamljs": "^0.3.0"
