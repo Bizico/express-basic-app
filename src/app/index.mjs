@@ -44,8 +44,6 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));
 
-app.use(express.static(path.resolve(process.env.PUBLIC_ROOT)));
-
 app.use("/api", CORSMiddleware, api);
 
 app.use(Raven.errorHandler());
@@ -69,4 +67,4 @@ app.use((err, req, res, next) => {
   sendError(res, json)(err);
 });
 
-module.exports = app;
+export default app;

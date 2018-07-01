@@ -25,15 +25,10 @@
   },
   "scripts": {
     "start": "node build/server.js",
-    "start:dev": "nodemon --exec babel-node -- ./src/www.js --inspect ",
+    "start:dev": "nodemon --experimental-modules ./src/www.mjs --inspect ",
     "build:doc": "multi-file-swagger -o yaml ./public/index.yaml > ./public/doc.yaml",
     "build": "webpack --config ./webpack.config.js",
     "test": "jest --no-cache",
-    "test:watch": "jest --watch",
-    "cli": "babel-node  ./scripts/cli.js"
-  },
-  "devDependencies": {
-    "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "babel-preset-env": "^1.7.0"
+    "test:watch": "jest --watch"
   }
 }

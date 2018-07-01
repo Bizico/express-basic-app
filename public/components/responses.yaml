@@ -5,6 +5,23 @@ Empty:
     application/json:
       schema:
         "$ref": "#/components/schemas/Empty"
+
+Item:
+  description: |
+    Empty Object
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/Item"
+
+List:
+  description: |
+    Empty Object
+  content:
+    application/json:
+      schema:
+        "$ref": "#/components/schemas/List"
+        
 Name:
   description: |
      Object.

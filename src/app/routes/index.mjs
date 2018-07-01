@@ -6,6 +6,10 @@
 
 import express from "express";
 
+import list from "./list";
+
 let router = express.Router();
+
+list(router);
 
 export default router;

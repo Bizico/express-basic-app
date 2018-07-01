@@ -103,3 +103,24 @@ User:
     username:
       type: string
       example: "xxx_casual_user_xxx"
+
+Item:
+  type: object
+  properties:
+    id:
+      type: number
+      example: 1
+    name:
+      type: string
+      example: "Milk"
+    qty:
+      type: number
+      example: 2
+    price:
+      type: number
+      example: 2.7
+
+List:
+  type: array
+  items:
+    $ref: "#/components/schemas/Item"

@@ -243,113 +243,17 @@ servers:
   - url: 'http://localhost:3000'
   - url: 'http://127.0.0.1:3000'
 tags:
-  - name: Name
-    description: Tag name.
+  - name: List
+    description: Shopping List.
 security:
   - bearerAuth: []
 paths:
-  /api/login:
-    post:
-      summary: Get Auth token
-      description: I can login with Email address and Password
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/Login'
-      responses:
-        '200':
-          $ref: '#/components/responses/LoginSuccess'
-        '400':
-          $ref: '#/components/responses/LoginError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/join:
-    post:
-      summary: Join by invite
-      description: I can do my first login using invite token
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/Join'
-      responses:
-        '200':
-          $ref: '#/components/responses/LoginSuccess'
-        '400':
-          $ref: '#/components/responses/JoinError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/invite:
-    post:
-      summary: Send  Invite to email
-      description: As an  I can invite other
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/Invite'
-      responses:
-        '200':
-          $ref: '#/components/responses/Name'
-        '400':
-          $ref: '#/components/responses/InviteError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/recover:
-    post:
-      summary: Recover Password Get Recovery Email
-      description: Request restore password email
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/Recover'
-      responses:
-        '200':
-          $ref: '#/components/responses/LoginSuccess'
-        '400':
-          $ref: '#/components/responses/RecoverError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/restore:
-    post:
-      summary: Restore password by Token
-      description: >-
-        As an  I can restore password by providing an email address registered
-        in the system
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/Restore'
-      responses:
-        '200':
-          $ref: '#/components/responses/LoginSuccess'
-        '400':
-          $ref: '#/components/responses/RestoreError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-      security: []
-  /api/password/change:
-    patch:
-      summary: Change  Password
-      description: As an  I can change password
-      tags:
-        - Name
-      requestBody:
-        $ref: '#/components/requestBodies/ChangePassword'
-      responses:
-        '200':
-          $ref: '#/components/responses/LoginSuccess'
-        '400':
-          $ref: '#/components/responses/ChangePasswordError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /api/users:
+  /api/list:
     get:
-      summary: Get Users List
-      description: As an  I can get list of all Users
+      summary: List of Items
+      description: Get All List of Shopping Items
       tags:
-        - Name
+        - List
       parameters:
         - name: filter
           description: Filtration
@@ -377,28 +281,30 @@ paths:
             type: number
       responses:
         '200':
-          $ref: '#/components/responses/UsersGetSuccess'
+          $ref: '#/components/responses/List'
         '400':
-          $ref: '#/components/responses/UsersGetError'
+          $ref: '#/components/responses/LoginError'
         '500':
           $ref: '#/components/responses/ServerError'
-  '/api/users/{id}':
+      security: []
+  '/api/list/{id}':
     get:
-      summary: Get User by ID
-      description: As an  I can view User’s profile
+      summary: Get Item By ID.
+      description: Obtain List Item using it's ID
       tags:
-        - Name
+        - List
       parameters:
         - name: id
+          description: Item ID
           in: path
-          required: true
+          required: false
           schema:
-            type: integer
+            type: number
       responses:
         '200':
-          $ref: '#/components/responses/UserGetSuccess'
+          $ref: '#/components/responses/Item'
         '400':
-          $ref: '#/components/responses/UserGetError'
+          $ref: '#/components/responses/UsersGetError'
         '500':
           $ref: '#/components/responses/ServerError'
 components:
@@ -512,6 +418,25 @@ components:
         username:
           type: string
           example: xxx_casual_user_xxx
+    Item:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Milk
+        qty:
+          type: number
+          example: 2
+        price:
+          type: number
+          example: 2.7
+    List:
+      type: array
+      items:
+        $ref: '#/components/schemas/Item'
   requestBodies:
     Email:
       description: A JSON object contaning email.
@@ -619,6 +544,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Empty'
+    Item:
+      description: |
+        Empty Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Item'
+    List:
+      description: |
+        Empty Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/List'
     Name:
       description: |
         Object.
