@@ -12,7 +12,6 @@
     "bookshelf-collection-querystring-mutation": "^0.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "jest": "^23.1.0",
     "jsep": "^0.3.4",
     "knex": "^0.14.6",
     "morgan": "^1.9.0",
@@ -23,12 +22,18 @@
     "validator": "^10.2.0",
     "yamljs": "^0.3.0"
   },
+  "devDependencies": {
+    "jest": "^23.1.0",
+    "nodemon": "*"
+  },
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node --experimental-modules ./src/www.mjs --inspect",
     "start:dev": "nodemon --experimental-modules ./src/www.mjs --inspect ",
     "build:doc": "multi-file-swagger -o yaml ./public/index.yaml > ./public/doc.yaml",
     "build": "webpack --config ./webpack.config.js",
     "test": "jest --no-cache",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "db:migrate": "knex migrate:latest",
+    "db:seed": "knex seed:run"
   }
 }
