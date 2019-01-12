@@ -240,8 +240,8 @@ info:
     email: vzhufiak@bizico.com
   version: 0.1.0
 servers:
-  - url: 'http://localhost:3000'
-  - url: 'http://127.0.0.1:3000'
+  - url: "http://localhost:3000"
+  - url: "http://127.0.0.1:3000"
 tags:
   - name: List
     description: Shopping List.
@@ -280,14 +280,14 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          $ref: '#/components/responses/List'
-        '400':
-          $ref: '#/components/responses/LoginError'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        "200":
+          $ref: "#/components/responses/List"
+        "400":
+          $ref: "#/components/responses/LoginError"
+        "500":
+          $ref: "#/components/responses/ServerError"
       security: []
-  '/api/list/{id}':
+  "/api/list/{id}":
     get:
       summary: Get Item By ID.
       description: Obtain List Item using it's ID
@@ -301,12 +301,12 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          $ref: '#/components/responses/Item'
-        '400':
-          $ref: '#/components/responses/UsersGetError'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        "200":
+          $ref: "#/components/responses/Item"
+        "400":
+          $ref: "#/components/responses/UsersGetError"
+        "500":
+          $ref: "#/components/responses/ServerError"
 components:
   securitySchemes:
     bearerAuth:
@@ -352,7 +352,7 @@ components:
           example: 1
     ValidationError:
       allOf:
-        - $ref: '#/components/schemas/BaseError'
+        - $ref: "#/components/schemas/BaseError"
       description: Thrown when request parameters are inapropriate.
       example:
         code: A000
@@ -363,7 +363,7 @@ components:
             message: Must be at least 6 chars
     QueryParseError:
       allOf:
-        - $ref: '#/components/schemas/BaseError'
+        - $ref: "#/components/schemas/BaseError"
       description: Thrown when request filter/orderBy parameters are inapropriate.
       example:
         code: A000
@@ -371,7 +371,7 @@ components:
         status: 400
     AuthorizationError:
       allOf:
-        - $ref: '#/components/schemas/BaseError'
+        - $ref: "#/components/schemas/BaseError"
       description: Thrown when user has no access rights.
       example:
         code: E001
@@ -436,7 +436,7 @@ components:
     List:
       type: array
       items:
-        $ref: '#/components/schemas/Item'
+        $ref: "#/components/schemas/Item"
   requestBodies:
     Email:
       description: A JSON object contaning email.
@@ -459,7 +459,7 @@ components:
             properties:
               email:
                 type: string
-                example: '@bizico.com'
+                example: "@bizico.com"
     Restore:
       description: Data requred for password reset.
       required: true
@@ -543,21 +543,21 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Empty'
+            $ref: "#/components/schemas/Empty"
     Item:
       description: |
         Empty Object
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Item'
+            $ref: "#/components/schemas/Item"
     List:
       description: |
         Empty Object
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/List'
+            $ref: "#/components/schemas/List"
     Name:
       description: |
         Object.
@@ -589,7 +589,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     JoinError:
       description: |
         Failed to Join.
@@ -598,7 +598,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     InviteError:
       description: |
         Failed to Join.
@@ -607,7 +607,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     RestoreError:
       description: |
         Failed to Join.
@@ -616,17 +616,17 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     ChangePasswordError:
       description: |
         Failed to Change Password.
         Possible error codes:
         - A000 -  Does Not Exist.
-        - A011 - Bad Old Password. 
+        - A011 - Bad Old Password.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     RecoverError:
       description: |
         Failed to Join.
@@ -635,7 +635,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     UserGetError:
       description: |
         Failed to Get User.
@@ -644,7 +644,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     UserBanError:
       description: |
         Failed to Ban User.
@@ -653,7 +653,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     UserUnBanError:
       description: |
         Failed to Unban User.
@@ -662,20 +662,20 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: "#/components/schemas/ValidationError"
     UsersGetError:
       description: |
         Failed to Get Users List.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/QueryParseError'
+            $ref: "#/components/schemas/QueryParseError"
     UserGetSuccess:
       description: User.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
     UsersGetSuccess:
       description: List of Users.
       content:
@@ -686,19 +686,18 @@ components:
               results:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
               pagination:
-                $ref: '#/components/schemas/Pagination'
+                $ref: "#/components/schemas/Pagination"
     ServerError:
       description: Something went terribly wrong.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ServerError'
+            $ref: "#/components/schemas/ServerError"
     AuthorizationError:
       description: Not authorized.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthorizationError'
-
+            $ref: "#/components/schemas/AuthorizationError"
